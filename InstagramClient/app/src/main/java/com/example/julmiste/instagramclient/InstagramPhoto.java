@@ -1,5 +1,7 @@
 package com.example.julmiste.instagramclient;
 
+import java.util.ArrayList;
+
 /**
  * Created by julmiste on 5/8/16.
  */
@@ -12,5 +14,6 @@ public class InstagramPhoto {
     public int commentCount;
     public String profilePicture;
     public long createdTime;
+    public ArrayList<InstagramComment> instaComments;
 
 }

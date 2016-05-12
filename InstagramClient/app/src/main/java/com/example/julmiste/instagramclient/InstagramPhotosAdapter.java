@@ -2,7 +2,10 @@ package com.example.julmiste.instagramclient;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.format.DateUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,14 +38,13 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto>{
         }
 
         TextView tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
+
         ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
         ImageView ivUserProfile = (ImageView) convertView.findViewById(R.id.ivUserProfile) ;
         TextView tvUserName =(TextView)convertView.findViewById(R.id.tvUserName) ;
         TextView tvTimeStamp =(TextView) convertView.findViewById(R.id.tvTimeStamp);
         TextView tvLikesCount =(TextView) convertView.findViewById(R.id.tvLikesCount) ;
 
-
-        tvCaption.setText(photo.caption);
 
         ivPhoto.setImageResource(0);
         ivUserProfile.setImageResource(0);
@@ -51,7 +53,15 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto>{
         Picasso.with(getContext()).load(photo.profilePicture).into(ivUserProfile);
 
         tvUserName.setText(photo.username);
+        tvUserName.setTextColor(Color.BLUE);
+
         tvLikesCount.setText(photo.likesCount + "likes");
+        tvLikesCount.setTextColor(Color.BLUE);
+
+        Spannable caption = new SpannableString(photo.username + " " + photo.caption) ;
+        caption.setSpan(new ForegroundColorSpan(Color.BLUE),0,photo.username.length(),0);
+        //tvCaption.setText(photo.caption);
+        tvCaption.setText(caption, TextView.BufferType.SPANNABLE);
 
         String relativeTimeStamp = DateUtils.getRelativeTimeSpanString(
                 photo.createdTime

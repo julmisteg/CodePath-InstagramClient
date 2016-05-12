@@ -75,20 +75,43 @@ public class PhotosActivity extends AppCompatActivity {
                 JSONArray photosJSON =null;
                 try{
                     photosJSON = response.getJSONArray("data");
-                    for (int i=0;i <photosJSON.length();i++){
-                        JSONObject photoJSON =photosJSON.getJSONObject(i);
+                    for (int i=0;i <photosJSON.length();i++) {
+                        JSONObject photoJSON = photosJSON.getJSONObject(i);
                         Log.i("DEBUG", photoJSON.toString());
                         InstagramPhoto photo = new InstagramPhoto();
                         photo.username = photoJSON.getJSONObject("user").getString("username");
-                        photo.caption=photoJSON.getJSONObject("caption").getString("text");
-                        photo.imageUrl=photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getString("url");
-                        photo.imageHeight=photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getInt("height");
-                        photo.likesCount=photoJSON.getJSONObject("likes").getInt("count");
-                        photo.commentCount=photoJSON.getJSONObject("comments").getInt("count");
-                        photo.profilePicture=photoJSON.getJSONObject("user").getString("profile_picture");
-                        photo.createdTime=photoJSON.getLong("created_time")*1000;
-                        photos.add(photo);
-                        
+                        if(photoJSON.optJSONObject("caption") !=null) {
+                            photo.caption = photoJSON.getJSONObject("caption").getString("text");
+                        }
+                        photo.imageUrl = photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getString("url");
+                        photo.imageHeight = photoJSON.getJSONObject("images").getJSONObject("standard_resolution").getInt("height");
+                        if (photoJSON.optJSONObject("likes") != null) {
+                            photo.likesCount = photoJSON.getJSONObject("likes").getInt("count");
+                        }
+                        photo.profilePicture = photoJSON.getJSONObject("user").getString("profile_picture");
+                        photo.createdTime = photoJSON.getLong("created_time") * 1000;
+
+                       // Comments
+                        photo.instaComments = new ArrayList<InstagramComment>();
+                        if (photoJSON.optJSONObject("comments") != null) {
+                            photo.commentCount = photoJSON.getJSONObject("comments").getInt("count");
+                            JSONArray commentsJSON = photoJSON.getJSONObject("comments").getJSONArray("data");
+                            for (int j = 0; j < commentsJSON.length(); j++) {
+
+                                JSONObject commentJSON = commentsJSON.getJSONObject(j);
+                                Log.i("DEBUG", commentJSON.toString());
+                                InstagramComment comments = new InstagramComment();
+                                comments.text = commentJSON.getString("text");
+                                comments.profilePic = commentJSON.getJSONObject("from").getString("profile_picture");
+                                comments.createdT = commentJSON.getLong("created_time") * 1000;
+                                comments.usrName = commentJSON.getJSONObject("from").getString("username");
+                                photo.instaComments.add(comments);
+
+
+                            }
+                            photos.add(photo);
+
+                        }
                     }
 
                 }catch (JSONException e){ e.printStackTrace();}
