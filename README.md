@@ -9,13 +9,13 @@ Time spent: **9** hours spent in total
 The following **required** functionality is completed:
 
 * [X] User can **scroll through current popular photos** from Instagram
-* [X ] For each photo displayed, user can see the following details:
-  * [X ] Graphic, Caption, Username
-  * [X ] Relative timestamp, likes count, user's profile image
+* [X] For each photo displayed, user can see the following details:
+  * [X] Graphic, Caption, Username
+  * [X] Relative timestamp, likes count, user's profile image
 
 The following **optional** features are implemented:
 
-* [X ] User can **pull-to-refresh** popular stream to get the latest popular photos
+* [X] User can **pull-to-refresh** popular stream to get the latest popular photos
 * [ ] User can see latest comments for each photo (**bonus** - Show last 2 comments for each photo)
 * [X] User can see all the profile images in circles (Hint, use [RoundedImageView](https://github.com/vinc3m1/RoundedImageView))
 * [ ] Display a nice default placeholder graphic for each image during loading
